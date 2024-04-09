@@ -55,5 +55,8 @@ if __name__ == "__main__":
     base_result_df = compute_num_anomaly(base_df, base_id_df, base_icu_df)
     sim_result_df = compute_num_anomaly(sim_df, sim_id_df, sim_icu_df)
 
+    base_result_df.to_csv("result/Base_IDF_anomaly.csv", index=False)
+    sim_result_df.to_csv("result/SIM_IDF_anomaly.csv", index=False)
+
     plot(base_result_df)
     plot(sim_result_df)
