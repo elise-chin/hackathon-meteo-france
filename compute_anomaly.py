@@ -14,7 +14,7 @@ def compute_num_anomaly(df, id_df, icu_df):
 
     num_anomaly = []
     num_days = []
-    for id in df["ID"].unique():
+    for id in icu_df["ID"].unique():
         info = df.loc[lambda df: df["ID"] == id]["is_hot"].value_counts()
         if (icu_df.loc[lambda df: df["ID"] == id]["nbICU"].reset_index(drop=True)[0] < 10) and (1 in info.keys()):
             num_anomaly.append(df.loc[lambda df: df["ID"] == id]["is_hot"].value_counts()[1])
@@ -24,7 +24,7 @@ def compute_num_anomaly(df, id_df, icu_df):
             num_anomaly.append(0)
         num_days.append(df.loc[lambda df: df["ID"] == id].shape[0])
 
-    result_df = pd.DataFrame({"ID": df["ID"].unique(), "num_anomaly": num_anomaly, "num_days": num_days}).assign(percent_num_anomaly=lambda df: df["num_anomaly"]/df["num_days"] * 100)
+    result_df = pd.DataFrame({"ID": icu_df["ID"].unique(), "num_anomaly": num_anomaly, "num_days": num_days}).assign(percent_num_anomaly=lambda df: df["num_anomaly"]/df["num_days"] * 100)
 
     return result_df
 
